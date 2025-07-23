@@ -3,13 +3,15 @@
     "name":"Ticher Baja",
     "description" : "Tichney ra Geet bhajxa, bhujena bhaney ta Skill issues ho fs",
     "version" : "1.0.0",
-    "action": {},
+    "action": {
+        "default_pop": "index.html"
+    },
     "permissions": [
         "scripting",
         "tabs"
     ],
     "icons":{
-        "32": "./icons/logo.png"
+        "32": "logo.png"
     },
     "host_permissions": [
         "http://*/*",
