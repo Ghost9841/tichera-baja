@@ -4,7 +4,7 @@
     "description" : "Tichney ra Geet bhajxa, bhujena bhaney ta Skill issues ho fs",
     "version" : "1.0.0",
     "action": {
-        "default_pop": "index.html"
+        "default_popup": "index.html"
     },
     "permissions": [
         "scripting",
