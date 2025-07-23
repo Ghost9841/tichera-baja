@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "name":"Ticher Baja",
+    "description" : "Tichney ra Geet bhajxa, bhujena bhaney ta Skill issues ho fs",
+    "version" : "1.0",
+    "action": {},
+    "permissions": [
+        "scripting",
+        "tabs"
+    ],
+    "icons":{
+        "32": "./icons/logo.png"
+    },
+    "host_permissions": [
+        "http://*/*",
+        "http://*/*"
+    ]
+
+}
