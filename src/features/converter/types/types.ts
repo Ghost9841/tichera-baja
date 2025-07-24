@@ -4,3 +4,9 @@ export interface SoundItem {
   url: string;
   blob: Blob;
 }
+
+export interface TabsProps {
+  activeTab: 'converter' | 'soundboard';
+  setActiveTab: (tab: 'converter' | 'soundboard') => void;
+  sounds: number;
+}

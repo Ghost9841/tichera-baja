@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile } from '@ffmpeg/util';
 import { UploadCloud, Download, Play, Trash2, Music, Film } from 'lucide-react';
 import type { SoundItem } from '../types/types';
+import Header from '@/components/Header';
+import Tabs from '@/components/Tabs';
+import { ffmpeg } from './ConverterPanel';
 
-const ffmpeg = new FFmpeg();
 
 
 
@@ -31,7 +32,7 @@ const VideoConverter = () => {
         ffmpeg.on('log', ({ message }) => {
           setProgress(message);
         });
-        
+
         ffmpeg.on('progress', ({ progress: prog }) => {
           setProgress(`Converting... ${Math.round(prog * 100)}%`);
         });
@@ -63,7 +64,7 @@ const VideoConverter = () => {
 
   const convertToMp3 = async () => {
     if (!videoFile || !ffmpegLoaded) return;
-    
+
     setConverting(true);
     setProgress('Starting conversion...');
 
@@ -74,10 +75,10 @@ const VideoConverter = () => {
 
       setProgress('Writing file to FFmpeg...');
       await ffmpeg.writeFile(inputFileName, await fetchFile(videoFile));
-      
+
       setProgress('Converting to MP3...');
       await ffmpeg.exec([
-        '-i', inputFileName, 
+        '-i', inputFileName,
         '-vn', // No video
         '-ar', '44100', // Sample rate
         '-ac', '2', // Stereo
@@ -92,10 +93,10 @@ const VideoConverter = () => {
 
       setAudioUrl(url);
       setProgress('Conversion completed!');
-      
+
       // Auto-switch to soundboard if conversion successful
       setTimeout(() => setActiveTab('soundboard'), 1000);
-      
+
     } catch (error) {
       setProgress('Conversion failed: ' + (error as Error).message);
       console.error('Conversion error:', error);
@@ -126,7 +127,7 @@ const VideoConverter = () => {
 
     const audio = new Audio(url);
     setCurrentlyPlaying(id);
-    
+
     audio.play().catch(e => {
       console.error('Playback failed:', e);
       setCurrentlyPlaying(null);
@@ -156,39 +157,9 @@ const VideoConverter = () => {
     <div className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-purple-50 to-blue-50 min-h-screen">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6">
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Music className="w-8 h-8" />
-            Video to Audio Converter & Soundboard
-          </h1>
-          <p className="mt-2 opacity-90">Convert MP4, WebM, and other video formats to MP3</p>
-        </div>
-
+        <Header />
         {/* Tabs */}
-        <div className="flex border-b">
-          <button
-            onClick={() => setActiveTab('converter')}
-            className={`flex-1 py-3 px-4 text-center font-medium transition-colors ${
-              activeTab === 'converter'
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            <Film className="w-5 h-5 inline mr-2" />
-            Converter
-          </button>
-          <button
-            onClick={() => setActiveTab('soundboard')}
-            className={`flex-1 py-3 px-4 text-center font-medium transition-colors ${
-              activeTab === 'soundboard'
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            <Music className="w-5 h-5 inline mr-2" />
-            Soundboard ({sounds.length})
-          </button>
-        </div>
+        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} sounds={sounds.length} />
 
         {/* Converter Tab */}
         {activeTab === 'converter' && (
@@ -283,17 +254,16 @@ const VideoConverter = () => {
                   <div key={sound.id} className="relative group">
                     <button
                       onClick={() => playSound(sound.url, sound.id)}
-                      className={`w-full p-4 rounded-lg transition-all transform hover:scale-105 shadow-md ${
-                        currentlyPlaying === sound.id
+                      className={`w-full p-4 rounded-lg transition-all transform hover:scale-105 shadow-md ${currentlyPlaying === sound.id
                           ? 'bg-gradient-to-r from-green-500 to-blue-500 text-white animate-pulse'
                           : 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white hover:from-purple-600 hover:to-indigo-600'
-                      }`}
+                        }`}
                       title={sound.name}
                     >
                       <Play className="w-6 h-6 mx-auto mb-2" />
                       <div className="text-sm font-medium truncate">{sound.name}</div>
                     </button>
-                    
+
                     <button
                       onClick={() => removeSound(sound.id)}
                       className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-lg"
