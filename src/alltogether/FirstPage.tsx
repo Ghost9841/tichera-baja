@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { fetchFile } from '@ffmpeg/util';
-import {  Play, Trash2, Music,  } from 'lucide-react';
 import Header from '@/components/Header';
 import Tabs from '@/components/Tabs';
 import type { SoundItem } from '@/features/converter/types/types';
@@ -158,7 +157,7 @@ const MainPage = () => {
         {/* Converter Tab */}
         <ConverTerTab
         activeTab={activeTab} 
-        ffmpegLoaded={false} 
+        ffmpegLoaded={ffmpegLoaded} 
         videoFile={videoFile} 
         audioUrl={audioUrl} 
         setAudioUrl={setAudioUrl} 
