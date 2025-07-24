@@ -1,3 +1,5 @@
+import { FFmpeg } from "@ffmpeg/ffmpeg";
+
  export const downloadAudio = (url: string, filename: string) => {
 
     const a = document.createElement('a');
@@ -13,3 +15,6 @@
     document.body.removeChild(a);
 
   };
+
+
+export const ffmpeg = new FFmpeg();
