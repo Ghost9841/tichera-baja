@@ -2,15 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile } from '@ffmpeg/util';
 import { UploadCloud, Download, Play, Trash2, Music, Film } from 'lucide-react';
+import type { SoundItem } from '../types/types';
 
 const ffmpeg = new FFmpeg();
 
-interface SoundItem {
-  id: string;
-  name: string;
-  url: string;
-  blob: Blob;
-}
+
 
 const VideoConverter = () => {
   const [videoFile, setVideoFile] = useState<File | null>(null);
