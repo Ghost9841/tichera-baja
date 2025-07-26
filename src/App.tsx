@@ -1,6 +1,7 @@
 // src/App.tsx
 
-import MainPage from "./alltogether/FirstPage";
+import MainPage from "./alltogether/MainPage";
+
 
 export default function App() {
   return (

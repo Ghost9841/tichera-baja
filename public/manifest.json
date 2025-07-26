@@ -21,6 +21,15 @@
     ],
     "side_panel":{
         "default_path":"index.html"
+    },
+     "web_accessible_resources": [
+    {
+      "resources": ["ffmpeg/*"],
+      "matches": ["<all_urls>"]
     }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
 
 }

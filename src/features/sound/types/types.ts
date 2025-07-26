@@ -1,9 +1,15 @@
-import type { SoundItem } from "../components/SoundBoard";
 
-export interface SoundBoardTabProps {
-    activeTab: "converter" | "soundboard";
-    currentlyPlaying: string | null;
-    playSound: (url: string, id: string) => void;
-    removeSound: (id: string) => void;
-    sounds: SoundItem[];
+
+export interface SoundItem {
+  id: string;
+  name: string;
+  url: string;
 }
+
+export interface SoundboardProps {
+  sounds: SoundItem[];
+  currentlyPlaying: string | null;
+  onPlay: (url: string, id: string) => void;
+  onRemove: (id: string) => void;
+}
+
