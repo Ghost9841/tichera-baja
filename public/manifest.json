@@ -4,10 +4,12 @@
     "description" : "Tichney ra Geet bhajxa, bhujena bhaney ta Skill issues ho fs",
     "version" : "1.0.0",
     "action": {
-        "default_popup": "index.html"
+        "default_popup": "index.html",
+        "default_icon": "logo.png"
     },
     "permissions": [
         "scripting",
+        "sidePanel",
         "tabs"
     ],
     "icons":{
@@ -16,6 +18,9 @@
     "host_permissions": [
         "http://*/*",
         "http://*/*"
-    ]
+    ],
+    "side_panel":{
+        "default_path":"index.html"
+    }
 
 }

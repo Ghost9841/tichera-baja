@@ -39,7 +39,11 @@ const MainPage = () => {
         });
 
         try {
-          await ffmpeg.load();
+          await ffmpeg.load({
+            coreURL: "https://unpkg.com/@ffmpeg/core@0.12.9/dist/umd/ffmpeg-core.js",
+            wasmURL: "https://unpkg.com/@ffmpeg/core@0.12.9/dist/umd/ffmpeg-core.wasm",
+            workerURL: "https://unpkg.com/@ffmpeg/core@0.12.9/dist/umd/ffmpeg-core.worker.js"
+          });
           setFfmpegLoaded(true);
           setProgress('FFmpeg loaded successfully!');
         } catch (error) {
@@ -156,26 +160,26 @@ const MainPage = () => {
 
         {/* Converter Tab */}
         <ConverTerTab
-        activeTab={activeTab} 
-        ffmpegLoaded={ffmpegLoaded} 
-        videoFile={videoFile} 
-        audioUrl={audioUrl} 
-        setAudioUrl={setAudioUrl} 
-        setProgress={setProgress}
-        handleFileChange={handleFileChange}
-        converting={converting}
-        addToSoundboard={addToSoundboard}
-        progress={progress}
-        convertToMp3={convertToMp3} />
+          activeTab={activeTab}
+          ffmpegLoaded={ffmpegLoaded}
+          videoFile={videoFile}
+          audioUrl={audioUrl}
+          setAudioUrl={setAudioUrl}
+          setProgress={setProgress}
+          handleFileChange={handleFileChange}
+          converting={converting}
+          addToSoundboard={addToSoundboard}
+          progress={progress}
+          convertToMp3={convertToMp3} />
 
         {/* Soundboard Tab */}
-       <SoundBoardTab 
-       activeTab={activeTab}
-       currentlyPlaying={currentlyPlaying}
-       removeSound={removeSound}
-       playSound={playSound}
-       sounds={sounds}
-       />
+        <SoundBoardTab
+          activeTab={activeTab}
+          currentlyPlaying={currentlyPlaying}
+          removeSound={removeSound}
+          playSound={playSound}
+          sounds={sounds}
+        />
       </div>
     </div>
   );
