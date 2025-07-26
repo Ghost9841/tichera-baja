@@ -1,5 +1,4 @@
 import { Download, UploadCloud } from 'lucide-react'
-import React from 'react'
 import { downloadAudio } from '../services/services'
 import type { ConverterTabProps } from '../types/types'
 
