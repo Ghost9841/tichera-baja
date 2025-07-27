@@ -4,10 +4,12 @@ import axios from 'axios';
 // Determine the base URL based on environment
 const getBaseUrl = () => {
   // For Vite projects, environment variables start with VITE_
-  if (import.meta.env.VITE_PRODUCTION_URL) {
+  if(import.meta.env.VITE_API_BASE_URL){
+    return import.meta.env.VITE_API_BASE_URL
+  } else  {
     return 'https://tichera-baja.onrender.com/api';
   }
-  return 'http://localhost:8000/api';
+  // return 'http://localhost:8000/api';
 };
 
 // Create axios instance with base URL
