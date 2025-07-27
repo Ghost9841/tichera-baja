@@ -9,7 +9,7 @@ const SoundPage = () => {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
-  const [error] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
  useEffect(() => {
   const loadSounds = async () => {

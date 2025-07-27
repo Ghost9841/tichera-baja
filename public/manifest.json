@@ -10,14 +10,16 @@
     "permissions": [
         "scripting",
         "sidePanel",
-        "tabs"
+        "tabs",
+        "https://tichera-baja.onrender.com/*"
     ],
     "icons":{
         "32": "logo.png"
     },
     "host_permissions": [
         "http://*/*",
-        "http://*/*"
+        "http://*/*",
+        "https://tichera-baja.onrender.com/*"
     ],
     "side_panel":{
         "default_path":"index.html"
@@ -31,5 +33,6 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   }
+  
 
 }
