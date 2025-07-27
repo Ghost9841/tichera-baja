@@ -1,14 +1,13 @@
+import type { SoundItem } from '@/features/sound/types/types';
 import axios from 'axios';
 
 // Determine the base URL based on environment
 const getBaseUrl = () => {
-  try {
-    if (process.env.VITE_PRODUCTION_URL != '') { 
-        return 'https://tichera-baja.onrender.com/api'
-    }
-  } catch (error) {
-    return 'http://localhost:8000/api';
+  // For Vite projects, environment variables start with VITE_
+  if (import.meta.env.VITE_PRODUCTION_URL) {
+    return 'https://tichera-baja.onrender.com/api';
   }
+  return 'http://localhost:8000/api';
 };
 
 // Create axios instance with base URL
@@ -22,7 +21,6 @@ const apiClient = axios.create({
 // Request interceptor
 apiClient.interceptors.request.use(
   (config) => {
-    // You can modify requests here (e.g., add auth token)
     const token = localStorage.getItem('authToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -36,17 +34,11 @@ apiClient.interceptors.request.use(
 
 // Response interceptor
 apiClient.interceptors.response.use(
-  (response) => {
-    // You can modify successful responses here
-    return response.data;
-  },
+  (response) => response.data,
   (error) => {
-    // Handle errors globally
     if (error.response) {
-      // Server responded with a status code outside 2xx
       switch (error.response.status) {
         case 401:
-          // Handle unauthorized (e.g., redirect to login)
           console.error('Unauthorized access - please login');
           break;
         case 403:
@@ -62,14 +54,68 @@ apiClient.interceptors.response.use(
           console.error('Unknown error occurred');
       }
     } else if (error.request) {
-      // Request was made but no response received
       console.error('No response received from server');
     } else {
-      // Something happened in setting up the request
       console.error('Error setting up request:', error.message);
     }
     return Promise.reject(error);
   }
 );
+
+export const soundApi = {
+  getAllSounds: async () => {
+    try {
+      return await apiClient.get('/sounds');
+    } catch (error) {
+      console.error('Error fetching sounds:', error);
+      throw error;
+    }
+  },
+  
+  getSoundById: async (id: string) => {
+    try {
+      return await apiClient.get(`/sounds/${id}`);
+    } catch (error) {
+      console.error(`Error fetching sound ${id}:`, error);
+      throw error;
+    }
+  },
+  
+  deleteSound: async (id: string) => {
+    try {
+      return await apiClient.delete(`/sounds/${id}`);
+    } catch (error) {
+      console.error(`Error deleting sound ${id}:`, error);
+      throw error;
+    }
+  },
+  
+  uploadSound: async (file: File, name: string) => {
+    try {
+      const formData = new FormData();
+      formData.append('audioFile', file);
+      formData.append('name', name);
+      
+      return await apiClient.post('/sounds', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+    } catch (error) {
+      console.error('Error uploading sound:', error);
+      throw error;
+    }
+  },
+  
+  // Optional: Add update method if needed
+  updateSound: async (id: string, updates: Partial<SoundItem>) => {
+    try {
+      return await apiClient.patch(`/sounds/${id}`, updates);
+    } catch (error) {
+      console.error(`Error updating sound ${id}:`, error);
+      throw error;
+    }
+  }
+};
 
 export default apiClient;

@@ -1,9 +1,11 @@
 
 
 export interface SoundItem {
-  id: string;
+  _id: string;
   name: string;
   url: string;
+  duration?: number;
+  createdAt?: string;
 }
 
 export interface SoundboardProps {
